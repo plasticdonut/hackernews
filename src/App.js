@@ -57,7 +57,7 @@ class App extends Component {
         {!isFetching && stories.length === 0 && <h2>Empty.</h2>}
         {stories.length > 0 && (
           <div style={{ opacity: isFetching ? 0.5 : 1 }}>
-            {stories.map}
+            {stories}
           </div>
         )}
       </div>
