@@ -1,26 +1,97 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import {
+  fetchStories,
+} from './actions'
+// import Picker from './components/Picker'
+// import Posts from './components/Posts'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
+class App extends Component {
+  constructor(props) {
+    super(props)
+    // this.handleChange = this.handleChange.bind(this)
+    // this.handleRefreshClick = this.handleRefreshClick.bind(this)
+  }
+
+  componentDidMount() {
+    const { dispatch } = this.props
+    dispatch(fetchStories())
+  }
+
+  // componentDidUpdate(prevProps) {
+  //   if (this.props.selectedSubreddit !== prevProps.selectedSubreddit) {
+  //     const { dispatch, selectedSubreddit } = this.props
+  //     dispatch(fetchPostsIfNeeded(selectedSubreddit))
+  //   }
+  // }
+
+  // handleChange(nextSubreddit) {
+  //   this.props.dispatch(selectSubreddit(nextSubreddit))
+  //   this.props.dispatch(fetchPostsIfNeeded(nextSubreddit))
+  // }
+
+  // handleRefreshClick(e) {
+  //   e.preventDefault()
+
+  //   const { dispatch, selectedSubreddit } = this.props
+  //   dispatch(invalidateSubreddit(selectedSubreddit))
+  //   dispatch(fetchPostsIfNeeded(selectedSubreddit))
+  // }
+
+  render() {
+    const { stories, isFetching, lastUpdated } = this.props
+    return (
+      <div>
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          {lastUpdated && (
+            <span>
+              Last updated at {new Date(lastUpdated).toLocaleTimeString()}.{' '}
+            </span>
+          )}
+          {!isFetching && (
+            <button onClick={this.handleRefreshClick}>Refresh</button>
+          )}
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+        {isFetching && stories.length === 0 && <h2>Loading...</h2>}
+        {!isFetching && stories.length === 0 && <h2>Empty.</h2>}
+        {stories.length > 0 && (
+          <div style={{ opacity: isFetching ? 0.5 : 1 }}>
+            {stories.map}
+          </div>
+        )}
+      </div>
+    )
+  }
 }
 
-export default App;
+App.propTypes = {
+  stories: PropTypes.array.isRequired,
+  isFetching: PropTypes.bool.isRequired,
+  lastUpdated: PropTypes.number,
+  dispatch: PropTypes.func.isRequired
+}
+
+function mapStateToProps(state) {
+  console.log('state')
+  console.log(state)
+  var stories = []
+  const { isFetching, lastUpdated } = state
+  if(state.stories) {
+    console.log(state.stories)
+    stories = state.stories.items
+  } 
+  else {
+    stories = []
+  }
+
+  console.log()
+
+  return {
+    stories,
+    isFetching,
+    lastUpdated
+  }
+}
+
+export default connect(mapStateToProps)(App)
