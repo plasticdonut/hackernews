@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import Story from './Story'
 import {
   fetchStories,
   fetchStoryContent,
@@ -9,11 +10,6 @@ import {
 // import Posts from './components/Posts'
 
 class App extends Component {
-  // constructor(props) {
-  //   super(props)
-  //   // this.handleChange = this.handleChange.bind(this)
-  //   // this.handleRefreshClick = this.handleRefreshClick.bind(this)
-  // }
 
   componentDidMount() {
     const { dispatch } = this.props
@@ -22,28 +18,12 @@ class App extends Component {
     dispatch(fetchStoryContent('21417621'))
   }
 
-  // componentDidUpdate(prevProps) {
-  //   if (this.props.selectedSubreddit !== prevProps.selectedSubreddit) {
-  //     const { dispatch, selectedSubreddit } = this.props
-  //     dispatch(fetchPostsIfNeeded(selectedSubreddit))
-  //   }
-  // }
-
-  // handleChange(nextSubreddit) {
-  //   this.props.dispatch(selectSubreddit(nextSubreddit))
-  //   this.props.dispatch(fetchPostsIfNeeded(nextSubreddit))
-  // }
-
-  // handleRefreshClick(e) {
-  //   e.preventDefault()
-
-  //   const { dispatch, selectedSubreddit } = this.props
-  //   dispatch(invalidateSubreddit(selectedSubreddit))
-  //   dispatch(fetchPostsIfNeeded(selectedSubreddit))
-  // }
-
   render() {
     const { stories, isFetching, lastUpdated } = this.props
+
+    const storyList = stories.slice(0,10).map((story) => 
+      <Story id={story} dispatch={this.props.dispatch}/>
+    )
     return (
       <div>
         <p>
@@ -52,15 +32,12 @@ class App extends Component {
               Last updated at {new Date(lastUpdated).toLocaleTimeString()}.{' '}
             </span>
           )}
-          {!isFetching && (
-            <button onClick={this.handleRefreshClick}>Refresh</button>
-          )}
         </p>
         {isFetching && stories.length === 0 && <h2>Loading...</h2>}
         {!isFetching && stories.length === 0 && <h2>Empty.</h2>}
         {stories.length > 0 && (
           <div style={{ opacity: isFetching ? 0.5 : 1 }}>
-            {stories}
+            {storyList}
           </div>
         )}
       </div>
