@@ -14,8 +14,6 @@ class App extends Component {
   componentDidMount() {
     const { dispatch } = this.props
     dispatch(fetchStories())
-    dispatch(fetchStoryContent('8863'))
-    dispatch(fetchStoryContent('21417621'))
   }
 
   render() {
