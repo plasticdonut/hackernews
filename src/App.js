@@ -19,15 +19,19 @@ class App extends Component {
     dispatch(fetchStories())
   }
 
+  toggleView = () => {
+    this.viewMode = this.viewMode == 0 ? 1 : 0;
+    console.log(this.viewMode);
+  }
+
   render() {
-    const { stories, isFetching, lastUpdated } = this.props
+    const { stories, isFetching, lastUpdated, viewMode } = this.props
 
     const storyList = stories.slice(0,10).map((story) => 
       <Story id={story} dispatch={this.props.dispatch}/>
     )
 
     const sideBar = <Sidebar/>;
-
     return (
       <div>
         {sideBar}
@@ -40,6 +44,8 @@ class App extends Component {
             </div>
           )}
           <p>
+            {viewMode == 0 && (<div class="view-selector app-padded-1y app-padded-1x app-shadowed" onClick={this.toggleView}>List View</div>)}
+            {viewMode == 1 && (<div class="view-selector app-padded-1y app-padded-1x app-shadowed" onClick={this.toggleView}>Grid View</div>)}
             {lastUpdated && (
               <div class="last-updated-body">
                 Last updated at {new Date(lastUpdated).toLocaleTimeString()}.{' '}
@@ -56,13 +62,15 @@ App.propTypes = {
   stories: PropTypes.array.isRequired,
   isFetching: PropTypes.bool.isRequired,
   lastUpdated: PropTypes.number,
-  dispatch: PropTypes.func.isRequired
+  dispatch: PropTypes.func.isRequired,
+  viewMode: PropTypes.number
 }
 
 function mapStateToProps(state) {
 
   var stories = []
   const { isFetching, lastUpdated } = state.stories
+  var viewMode = 0;
   if(state.stories) {
     stories = state.stories.items
   } 
@@ -70,7 +78,8 @@ function mapStateToProps(state) {
   return {
     stories,
     isFetching,
-    lastUpdated
+    lastUpdated,
+    viewMode
   }
 }
 

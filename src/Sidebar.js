@@ -26,8 +26,12 @@ class Sidebar extends Component {
         </div>
 
         {/* Links */}
-        <div class="sidebar-link-body">
-
+        <div class="sidebar-link-body app-padded-4y">
+          <ul class="sidebar-link-ul">
+            <li class="sidebar-link-li">Activity</li>
+            <li class="sidebar-link-li">Messages</li>
+            <li class="sidebar-link-li">Settings</li>
+          </ul>
         </div>
 
         {/* Settings */}

@@ -38,6 +38,18 @@
     margin-top: 10px;
 }
 
+/* Link section */
+ul.sidebar-link-ul {
+    list-style: none;
+    padding: 0;
+}
+
+li.sidebar-link-li {
+    font-weight: bold;
+    padding: 30px 0;
+    cursor: pointer;
+}
+
 /* Settings section */
 .sidebar-settings-body {
     position: absolute;
