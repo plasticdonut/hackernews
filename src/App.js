@@ -6,6 +6,7 @@ import Story from './Story'
 import {
   fetchStories,
   fetchStoryContent,
+  toggleViewMode,
 } from './actions'
 import './App.css'
 
@@ -14,18 +15,23 @@ import './App.css'
 
 class App extends Component {
 
+  constructor(props) {
+    super(props)
+  }
+
   componentDidMount() {
     const { dispatch } = this.props
     dispatch(fetchStories())
   }
 
   toggleView = () => {
-    this.viewMode = this.viewMode == 0 ? 1 : 0;
-    console.log(this.viewMode);
+    console.log('toggle view clicked')
+    const { dispatch } = this.props
+    dispatch(toggleViewMode())
   }
 
   render() {
-    const { stories, isFetching, lastUpdated, viewMode } = this.props
+    const { stories, isFetching, lastUpdated, settings } = this.props
 
     const storyList = stories.slice(0,10).map((story) => 
       <Story id={story} dispatch={this.props.dispatch}/>
@@ -44,8 +50,8 @@ class App extends Component {
             </div>
           )}
           <p>
-            {viewMode == 0 && (<div class="view-selector app-padded-1y app-padded-1x app-shadowed" onClick={this.toggleView}>List View</div>)}
-            {viewMode == 1 && (<div class="view-selector app-padded-1y app-padded-1x app-shadowed" onClick={this.toggleView}>Grid View</div>)}
+            {settings.viewMode == 0 && (<div class="view-selector app-padded-1y app-padded-1x app-shadowed" onClick={this.toggleView}>List View</div>)}
+            {settings.viewMode == 1 && (<div class="view-selector app-padded-1y app-padded-1x app-shadowed" onClick={this.toggleView}>Grid View</div>)}
             {lastUpdated && (
               <div class="last-updated-body">
                 Last updated at {new Date(lastUpdated).toLocaleTimeString()}.{' '}
@@ -63,14 +69,14 @@ App.propTypes = {
   isFetching: PropTypes.bool.isRequired,
   lastUpdated: PropTypes.number,
   dispatch: PropTypes.func.isRequired,
-  viewMode: PropTypes.number
+  settings: PropTypes.object
 }
 
 function mapStateToProps(state) {
 
   var stories = []
   const { isFetching, lastUpdated } = state.stories
-  var viewMode = 0;
+  const { settings } = state
   if(state.stories) {
     stories = state.stories.items
   } 
@@ -79,7 +85,7 @@ function mapStateToProps(state) {
     stories,
     isFetching,
     lastUpdated,
-    viewMode
+    settings
   }
 }
 
