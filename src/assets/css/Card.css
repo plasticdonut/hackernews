@@ -1,0 +1,82 @@
+/* Card class */
+.app-card {
+    margin-bottom: 40px;
+    min-height: 400px;
+    background-color: #ffffff;
+    position: relative;
+    z-index: 1;
+}
+
+.app-shadowed {
+  box-shadow:0 0 4px #eeeeee;
+}
+
+.poster-avatar {
+    height: 30px;
+    width: 30px;
+    text-align: center;
+    line-height: 30px;
+    border-radius: 100px;
+    background-color: #4e8cff;
+    color: #ffffff;
+    font-weight: bold;
+    text-transform: uppercase;
+    display: inline-block;
+}
+
+.poster-name {
+    display: inline-block;
+    margin-left: 20px;
+    font-weight: bold;
+}
+
+.card-link {
+  text-decoration: none;
+}
+
+h3 {
+  font-size: 24px;
+  color: #4e8cff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.image-placeholder {
+    height: 200px;
+    margin-bottom: 15px;
+    background-color: #eeeeee;
+    color: #909090;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    line-height: 200px;
+}
+
+.url-body {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.url-text {
+    font-weight:bold;
+    color:#606060;
+}
+
+p {
+  font-size: 16px;
+  color: #606060;
+}
+
+.comment-body {
+    position: absolute;
+    left: 20px;
+    bottom: 20px;
+}
+
+.comment-text {
+    color: #909090;
+    font-size: 14px;
+    font-weight: bold;
+}

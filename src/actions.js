@@ -4,6 +4,7 @@ export const REQUEST_STORIES = 'REQUEST_STORIES'
 export const RECEIVE_STORIES = 'RECEIVE_STORIES'
 export const REQUEST_STORY_CONTENT = 'REQUEST_STORY_CONTENT'
 export const RECEIVE_STORY_CONTENT = 'RECEIVE_STORY_CONTENT'
+export const TOGGLE_VIEW_MODE = 'TOGGLE_VIEW_MODE'
 
 function requestStories() {
   return {
@@ -48,5 +49,11 @@ export function fetchStoryContent(id) {
     return fetch('https://hacker-news.firebaseio.com/v0/item/' + id + '.json')
       .then(response => response.json())
       .then(json => dispatch(receiveStoryContent(json)))
+  }
+}
+
+export function toggleViewMode() {
+  return {
+    type: TOGGLE_VIEW_MODE
   }
 }
